@@ -11,11 +11,10 @@ import (
 	"shoot-examples/shootmap/domain/repo"
 	"shoot-examples/shootmap/infra/repoimpl"
 	"shoot-examples/shootrest/github"
-	"time"
 
 	github78 "github.com/google/go-github/v78/github"
-	"github.com/lopolopen/shoot"
-	"github.com/lopolopen/shoot/middleware"
+	"github.com/loopopen/shoot"
+	"github.com/loopopen/shoot/middleware"
 	"gopkg.in/yaml.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -57,7 +56,7 @@ func useGoogleClientExample(cfg Config) {
 func useShootRestExample(cfg Config) {
 	c := shoot.NewRest[github.Client](
 		shoot.BaseURL("https://api.github.com"),
-		shoot.Timeout(3000*time.Millisecond),
+		shoot.Timeout("3s"),
 		shoot.EnableLogging(true),
 		shoot.Use(func(next http.RoundTripper) http.RoundTripper {
 			return middleware.RoundTripper(func(req *http.Request) (*http.Response, error) {
@@ -82,7 +81,7 @@ func useShootRestExample(cfg Config) {
 		fmt.Println(org.Url())
 	}
 
-	repos, resp, err := c.ListReposForOrg(context.Background(), "lopolopen", nil, nil, nil)
+	repos, resp, err := c.ListReposForOrg(context.Background(), "loopopen", nil, nil, nil)
 	if err != nil {
 		fmt.Println(err)
 	}
